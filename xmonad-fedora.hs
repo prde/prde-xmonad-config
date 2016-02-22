@@ -6,6 +6,7 @@ import Control.Monad
 import XMonad.Hooks.SetWMName
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
+import XMonad.Util.Run
 import qualified Data.Map        as M 
 
 import XMonad
@@ -34,7 +35,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Move focus to the master window                                 
     , ((modm,               xK_m     ), windows W.focusMaster  ) 
 
-    , ((modm, xK_e), spawn "emacs")
+    , ((modm, xK_e), spawn "emacsclient -c")
     --, ((modm, xK_Left), prevWS)
     --, ((modm, xK_Right), nextWS)
 
@@ -55,6 +56,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 main = do
      session <- getEnv "DESKTOP_SESSION"
      putEnv "_JAVA_AWT_WM_NONREPARENTING=1"
+     emacs <- spawnPipe "/usr/bin/emacs --daemon"
      xmonad  $ gnomeConfig  -- maybe desktopConfig desktop session
         {
         modMask = mod4Mask
