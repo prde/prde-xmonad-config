@@ -59,6 +59,7 @@ main = do
      session <- getEnv "DESKTOP_SESSION"
      putEnv "_JAVA_AWT_WM_NONREPARENTING=1"
      emacs <- spawnPipe "/usr/bin/emacs --daemon"
+     conky <- spawnPipe "[ $(/usr/bin/pidof conky) ] || /usr/bin/conky --daemonize"
      xmonad  $ gnomeConfig  -- maybe desktopConfig desktop session
         {
         modMask = mod4Mask
