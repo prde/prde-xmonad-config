@@ -5,10 +5,13 @@ import Data.Maybe (maybe)
 import System.Posix.Env (getEnv, putEnv)
 
 import XMonad
+import XMonad.Actions.Commands
+import XMonad.Actions.CycleWS
 import XMonad.Config.Desktop
 import XMonad.Config.Gnome
 import XMonad.Config.Kde
 import XMonad.Config.Xfce
+import XMonad.Hooks.ServerMode
 import XMonad.Hooks.SetWMName
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
@@ -41,8 +44,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Launch browser
     , ((modm, xK_f), spawn "$(grep '^Exec' $(locate $(xdg-mime query default x-scheme-handler/http)) | tail -1 | sed 's/^Exec=//' | sed 's/%.//')")
 
-    --, ((modm, xK_Left), prevWS)
-    --, ((modm, xK_Right), nextWS)
+    , ((modm, xK_Left), prevWS)
+    , ((modm, xK_Right), nextWS)
 
     --, ((modm .|. shiftMask, xK_q), io (exitWith ExitSuccess))
 
@@ -71,6 +74,7 @@ main = do
         , normalBorderColor = "#444"
         , keys = myKeys
         , terminal = "gnome-terminal"
+        , handleEventHook = serverModeEventHook
         }
 
 desktop "gnome" = gnomeConfig
