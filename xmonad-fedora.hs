@@ -38,6 +38,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Launch Emacs client
     , ((modm, xK_e), spawn "emacsclient -c")
 
+    -- Launch browser
+    , ((modm, xK_f), spawn "$(grep '^Exec' $(locate $(xdg-mime query default x-scheme-handler/http)) | tail -1 | sed 's/^Exec=//' | sed 's/%.//')")
+
     --, ((modm, xK_Left), prevWS)
     --, ((modm, xK_Right), nextWS)
 
