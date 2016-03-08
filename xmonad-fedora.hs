@@ -11,8 +11,11 @@ import XMonad.Config.Desktop
 import XMonad.Config.Gnome
 import XMonad.Config.Kde
 import XMonad.Config.Xfce
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ServerMode
 import XMonad.Hooks.SetWMName
+import XMonad.Layout.Maximize
 import XMonad.Util.EZConfig
 import XMonad.Util.Run
 
@@ -48,6 +51,33 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm, xK_Right), nextWS)
 
     --, ((modm .|. shiftMask, xK_q), io (exitWith ExitSuccess))
+
+    -- Maximize the focused window temporarily
+    , ((modm, xK_equal), withFocused $ sendMessage . maximizeRestore)
+
+    -- Push window back into tiling
+    , ((modm, xK_minus), withFocused $ windows . W.sink)
+
+    -- Swap the focused window and the master window
+    , ((modm .|. shiftMask, xK_m), windows W.swapMaster)
+
+    -- Swap the focused window with the next window
+    , ((modm .|. shiftMask, xK_j), windows W.swapDown  )
+
+    -- Swap the focused window with the previous window
+    , ((modm .|. shiftMask, xK_k), windows W.swapUp    )
+
+    -- Shrink the master area
+    , ((modm, xK_h), sendMessage Shrink)
+
+    -- Expand the master area
+    , ((modm, xK_l), sendMessage Expand)
+
+    -- Increment the number of windows in the master area
+    , ((modm, xK_comma), sendMessage (IncMasterN 1))
+
+    -- Deincrement the number of windows in the master area
+    , ((modm, xK_period), sendMessage (IncMasterN (-1)))
 
     -- Restart xmonad
     , ((modm, xK_q), restart "xmonad" True)
