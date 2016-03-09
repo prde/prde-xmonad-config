@@ -68,10 +68,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_k), windows W.swapUp    )
 
     -- Shrink the master area
-    , ((modm, xK_h), sendMessage Shrink)
+    , ((modm .|. shiftMask, xK_Left), sendMessage Shrink)
 
     -- Expand the master area
-    , ((modm, xK_l), sendMessage Expand)
+    , ((modm .|. shiftMask, xK_Right), sendMessage Expand)
 
     -- Increment the number of windows in the master area
     , ((modm, xK_comma), sendMessage (IncMasterN 1))
