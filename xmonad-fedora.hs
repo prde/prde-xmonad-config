@@ -82,6 +82,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Restart xmonad
     , ((modm, xK_q), restart "xmonad" True)
 
+    -- Scan for bluetooth devices
+    , ((modm, xK_b), spawn "hcitool scan")
+
     , ((modm .|. shiftMask, xK_z), spawn "xscreensaver-command -lock")
     ]
     ++
